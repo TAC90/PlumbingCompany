@@ -1,0 +1,39 @@
+Employee > 
+	Picture
+
+	Name
+	Title
+	Address
+	Phone
+	
+	Hire Date
+	Details
+	
+	Jobs
+	
+Jobs > 
+	Client
+	Date Added
+	Status
+	
+	Employee
+	
+	Details (multi page?)
+		Date
+	
+	Parts used
+	
+Parts >
+	Picture
+	Item ID
+	
+	Cost
+	
+	Vendor
+	Vendor Price
+	
+Vendor ?
+	Name
+	Address
+	Phone
+	
