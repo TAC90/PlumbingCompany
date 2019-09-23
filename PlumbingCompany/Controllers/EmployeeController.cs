@@ -42,7 +42,8 @@ namespace PlumbingCompany.Controllers
                 {
                     FirstName = employee.TbEmpFirstName.Text,
                     LastName = employee.TbEmpLastName.Text,
-                    Address = employee.TbEmpAddress.Text
+                    Address = employee.TbEmpAddress.Text,
+                    ZipCode = employee.TbEmpZipCode.Text
 
 
                 };
