@@ -1,6 +1,6 @@
 ﻿<UserControl x:Class="PlumbingCompany.Views.EmployeeView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Models="clr-namespace:PlumbingCompany.Models" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded" mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="employeeViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:Employee}, CreateList=True}"/>
+        <!--<CollectionViewSource x:Key="employeeViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:Employee}, CreateList=True}"/>-->
     </UserControl.Resources>
     <Border Background="LightSkyBlue">
         <Grid x:Name="EmpViewer" Margin="10" DataContext="{Binding}">
@@ -54,6 +54,11 @@
                 <Label Content="Jobs" Style="{StaticResource LblView}"/>
                 <Button x:Name="BtSwapJobView" Grid.Row="3" Grid.Column="1" Width="80" VerticalAlignment="Bottom" Click="BtSwapJobView_Click" Content="Swap"/>
             </StackPanel>
+            <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+                <Label Content="Id: " Foreground="Gray" Style="{StaticResource LblView}"/>
+                <Label x:Name="LblEmployeeId" Content="{Binding EmployeeId}" Foreground="Gray" Style="{StaticResource LblView}"/>
+
+            </StackPanel>
             <StackPanel Grid.Column="2">
 
                 <ComboBox x:Name="CbEmpPrefix" Width="80" Height="32" HorizontalAlignment="Left" VerticalContentAlignment="Center">
@@ -79,16 +84,21 @@
             </StackPanel>
             <StackPanel Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0"/>
 
-            <DataGrid x:Name="DgJobList" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="False" DataContext="{Binding}" IsReadOnly="True">
+
+            <DataGrid x:Name="DgJobList" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Location, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="Location"/>
-                    <DataGridTextColumn Binding="{Binding Employees, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="Worker"/>
-                    <DataGridTextColumn Binding="{Binding DateStart, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="Date Start"/>
-                    <DataGridTextColumn Width="*" Binding="{Binding Details, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Header="Details"/>
+                    <DataGridTextColumn Binding="{Binding JobLocation}" Header="Location"/>
+                    <DataGridTextColumn Binding="{Binding JobWorkers}" Header="Worker"/>
+                    <DataGridTextColumn Binding="{Binding JobDateStart}" Header="Date Start"/>
+                    <DataGridTextColumn Width="*" Binding="{Binding JobDetails}" Header="Details"/>
                 </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate/>
+                </DataGrid.RowDetailsTemplate>
+
             </DataGrid>
 
-            <ListBox x:Name="LbJobList" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="LbJobList_SelectionChanged" Visibility="Hidden">
+            <ListBox x:Name="LbJobList" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding}" SelectionChanged="LbJobList_SelectionChanged" Visibility="Hidden">
                 <!--  List of jobs here  -->
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -107,8 +117,10 @@
             <Border Grid.RowSpan="2" Grid.Column="3" Width="150" Height="150" Margin="2" HorizontalAlignment="Right" VerticalAlignment="Top" Background="WhiteSmoke">
                 <Image Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding ProfilePicture}"/>
             </Border>
-            <Button x:Name="BtSaveForm" Grid.Row="2" Grid.Column="3" Width="75" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="BtSaveForm_Click" Content="Save"/>
-
+            <StackPanel Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
+                <Button x:Name="BtSaveForm" Width="75" Click="BtSaveForm_Click" Content="Save"/>
+                <Button x:Name="BtRemoveEmployee" Width="75" Click="BtRemoveEmployee_Click" Content="Delete"/>
+            </StackPanel>
 
         </Grid>
     </Border>

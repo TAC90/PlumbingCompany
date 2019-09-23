@@ -24,45 +24,28 @@ namespace PlumbingCompany.Views
     /// </summary>
     public partial class EmployeeView : UserControl
     {
-        CompanyContext context = new CompanyContext();
-        
+        readonly CompanyContext context = new CompanyContext();
+        readonly EmployeeController empControl = new EmployeeController();
+
         bool jobSwap = false;
+
         public EmployeeView()
         {
             InitializeComponent();
-
-
-            EmployeeController empControl = new EmployeeController(); //Construct Controller
-
-            LbEmployeeList.ItemsSource = empControl.FillEmployeeList();
-
-            //List<JobList> jobList = new List<JobList>
-            //{
-            //    new JobList() { JobId = 0, JobDetails = "Clear Piranha Plants from pipes.", JobLocation = "Peach's Castle", JobWorker = "Mario Mario", JobDateStart = "28/09/2019"},
-            //    new JobList() { JobId = 1, JobDetails = "Stomp Goombas", JobLocation = "Dinosaur Land", JobWorker = "Luigi Mario", JobDateStart = "6/09/2019"}
-            //};
-
-            //LbJobList.ItemsSource = jobList;
-
-            //DgJobList.ItemsSource = jobList;
+            
+            LbEmployeeList.ItemsSource = empControl.FillEmployeeList(); //Load Employee list on creation
         }
         private void LbEmployeeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (LbEmployeeList.SelectedItem != null)
             {
+                JobController jobControl = new JobController();
+
                 int id = (LbEmployeeList.SelectedItem as EmployeeController.EmployeeViewModel).EmpID; //Get Employee ID
-                
-                EmpViewer.DataContext = context.Employees.Find(id);
-                //context.Employees.Include(a => a.Jobs).Where(b => b.EmployeeId == id);
 
-                var f = context.Jobs.Where(a => a.Employees.Where(b => b.EmployeeId == id).Any(c => c != null)).ToList(); //Not working yet. Likely due to a list of items being placed in a datacontext, foreach?
-
-                List<Job> jobList = new List<Job>();
-                foreach (var empJobs in f)
-                {
-                    //build list of jobs
-                }
-                LbJobList.DataContext = f;
+                EmpViewer.DataContext = context.Employees.Find(id); //Fill binding data with Employee data found by this ID
+                DgJobList.ItemsSource = jobControl.FillJobShortList(id); // Fill job list of employee with this ID
+                //LbJobList.DataContext = jobControl.FillJobShortList(id);
             }
         }
 
@@ -101,7 +84,19 @@ namespace PlumbingCompany.Views
 
         private void BtSaveForm_Click(object sender, RoutedEventArgs e)
         {
+            empControl.AddNewEmployee(this); //Add new Employee
+            //Add a save existing employee with the same button, new method and check ID, or existing method? Reusable code?
 
+        }
+
+        private void BtRemoveEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult confirmDelete = MessageBox.Show("Are you sure you want to remove " + (LbEmployeeList.SelectedItem as EmployeeController.EmployeeViewModel).EmpFullName + "?", "Delete Confirmation", MessageBoxButton.YesNo);
+            if(confirmDelete == MessageBoxResult.Yes)
+            {
+                Console.WriteLine("Removed {0}",  (LbEmployeeList.SelectedItem as EmployeeController.EmployeeViewModel).EmpFullName);
+                LbEmployeeList.ItemsSource = empControl.FillEmployeeList();
+            }
         }
     }
 }

@@ -81,6 +81,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Migrations\201909171314477_AdjustJob1.cs" />
     <Compile Include="Migrations\201909171314477_AdjustJob1.Designer.cs">
       <DependentUpon>201909171314477_AdjustJob1.cs</DependentUpon>
@@ -160,7 +161,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Img\Employees\00_Default.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Img\Employees\01_Mario.png" />
     <Resource Include="Img\Employees\02_Donkey-Kong.png" />
