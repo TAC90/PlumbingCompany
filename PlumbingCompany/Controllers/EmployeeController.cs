@@ -43,8 +43,11 @@ namespace PlumbingCompany.Controllers
                     FirstName = employee.TbEmpFirstName.Text,
                     LastName = employee.TbEmpLastName.Text,
                     Address = employee.TbEmpAddress.Text,
-                    ZipCode = employee.TbEmpZipCode.Text
-
+                    ZipCode = employee.TbEmpZipCode.Text,
+                    City = employee.TbEmpCity.Text,
+                    Country = employee.TbEmpCountry,
+                    
+                    
 
                 };
                 context.Employees.Add(emp);
