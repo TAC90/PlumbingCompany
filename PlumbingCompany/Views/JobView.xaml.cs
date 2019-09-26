@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlumbingCompany.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,14 +21,36 @@ namespace PlumbingCompany.Views
     /// </summary>
     public partial class JobView : UserControl
     {
+        readonly CompanyContext context = new CompanyContext();
+        readonly JobController jobControl = new JobController();
+
         public JobView()
         {
             InitializeComponent();
+
+            LbJobList.ItemsSource = jobControl.FillJobList();
         }
 
         private void LbJobList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (LbJobList.SelectedItem != null)
+            {
+                int id = (LbJobList.SelectedItem as JobController.JobViewModel).JobId; //Get Job ID
 
+                JobViewer.DataContext = context.Jobs.Find(id); //Fill binding data with Job data found by this ID
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            // Do not load your data at design time.
+            // if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            // {
+            // 	//Load your data here and assign the result to the CollectionViewSource.
+            // 	System.Windows.Data.CollectionViewSource myCollectionViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["Resource Key for CollectionViewSource"];
+            // 	myCollectionViewSource.Source = your data
+            // }
         }
     }
 }

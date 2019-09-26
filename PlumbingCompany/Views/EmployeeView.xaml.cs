@@ -34,6 +34,7 @@ namespace PlumbingCompany.Views
             InitializeComponent();
             
             LbEmployeeList.ItemsSource = empControl.FillEmployeeList(); //Load Employee list on creation
+            CbEmpPrefix.ItemsSource = empControl.GetPrefixList(); //Fill prefix list
         }
         private void LbEmployeeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -45,14 +46,9 @@ namespace PlumbingCompany.Views
 
                 EmpViewer.DataContext = context.Employees.Find(id); //Fill binding data with Employee data found by this ID
                 DgJobList.ItemsSource = jobControl.FillJobShortList(id); // Fill job list of employee with this ID
-                //LbJobList.DataContext = jobControl.FillJobShortList(id);
             }
         }
 
-        private void LbJobList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void BtSwapJobView_Click(object sender, RoutedEventArgs e)
         {
@@ -84,9 +80,22 @@ namespace PlumbingCompany.Views
 
         private void BtSaveForm_Click(object sender, RoutedEventArgs e)
         {
-            empControl.AddNewEmployee(this); //Add new Employee
-            //Add a save existing employee with the same button, new method and check ID, or existing method? Reusable code?
-
+            if (LblEmployeeId.Content == null) //Is this a new employee?
+            {
+                if (MessageBox.Show($"Create new Employee {TbEmpFirstName.Text} {TbEmpLastName.Text}?", "Create New Employee", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    empControl.AddNewEmployee(this); //Add new Employee
+                    LbEmployeeList.ItemsSource = empControl.FillEmployeeList(); //Rebuild list
+                }
+            }
+            else //Existing employee
+            {
+                if (MessageBox.Show($"Update Employee {TbEmpFirstName.Text} {TbEmpLastName.Text}?", "Update Employee", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    empControl.UpdateEmployee(this); //Update Employee record
+                    LbEmployeeList.ItemsSource = empControl.FillEmployeeList(); //Rebuild list
+                }
+            }
         }
 
         private void BtRemoveEmployee_Click(object sender, RoutedEventArgs e)

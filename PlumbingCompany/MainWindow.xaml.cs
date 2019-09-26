@@ -53,6 +53,10 @@ namespace PlumbingCompany
         {
             DataContext = new JobViewModel();
         }
-        
+
+        private void BtCustomerView_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new CustomerViewModel();
+        }
     }
 }

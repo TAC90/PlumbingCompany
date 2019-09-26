@@ -61,15 +61,21 @@
             </StackPanel>
             <StackPanel Grid.Column="2">
 
-                <ComboBox x:Name="CbEmpPrefix" Width="80" Height="32" HorizontalAlignment="Left" VerticalContentAlignment="Center">
-                    <ComboBoxItem Content="Mr. " Style="{StaticResource CbiView}"/>
+                <ComboBox x:Name="CbEmpPrefix" ItemsSource="{Binding}" SelectedItem="{Binding Prefix, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource CbView}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <ComboBoxItem Content="{Binding}" Style="{StaticResource CbiView}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+
+                    <!--<ComboBoxItem Content="Mr. " Style="{StaticResource CbiView}"/>
                     <ComboBoxItem Content="Ms. " Style="{StaticResource CbiView}"/>
                     <ComboBoxItem Content="Mrs. " Style="{StaticResource CbiView}"/>
-                    <ComboBoxItem Content="Miss " Style="{StaticResource CbiView}"/>
+                    <ComboBoxItem Content="Miss " Style="{StaticResource CbiView}"/>-->
                 </ComboBox>
                 <TextBox x:Name="TbEmpFirstName" Style="{StaticResource TbView}" Text="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                 <TextBox x:Name="TbEmpLastName" Style="{StaticResource TbView}" Text="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                <DatePicker x:Name="TbEmpDateOfBirth" SelectedDate="{Binding DateOfBirth, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <DatePicker x:Name="DpEmpDateOfBirth" SelectedDate="{Binding DateOfBirth, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,10,0,0">
                 <TextBox x:Name="TbEmpAddress" Style="{StaticResource TbView}" Text="{Binding Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
@@ -87,9 +93,9 @@
 
             <DataGrid x:Name="DgJobList" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding JobLocation}" Header="Location"/>
+                    <DataGridTextColumn Binding="{Binding JobFullName}" Header="Location"/>
                     <DataGridTextColumn Binding="{Binding JobWorkers}" Header="Worker"/>
-                    <DataGridTextColumn Binding="{Binding JobDateStart}" Header="Date Start"/>
+                    <DataGridTextColumn Binding="{Binding JobDateTarget}" Header="Date Target"/>
                     <DataGridTextColumn Width="*" Binding="{Binding JobDetails}" Header="Details"/>
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
@@ -98,7 +104,7 @@
 
             </DataGrid>
 
-            <ListBox x:Name="LbJobList" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding}" SelectionChanged="LbJobList_SelectionChanged" Visibility="Hidden">
+            <ListBox x:Name="LbJobList" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding}" Visibility="Hidden">
                 <!--  List of jobs here  -->
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -115,7 +121,7 @@
 
 
             <Border Grid.RowSpan="2" Grid.Column="3" Width="150" Height="150" Margin="2" HorizontalAlignment="Right" VerticalAlignment="Top" Background="WhiteSmoke">
-                <Image Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding ProfilePicture}"/>
+                <Image Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Photo}"/>
             </Border>
             <StackPanel Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
                 <Button x:Name="BtSaveForm" Width="75" Click="BtSaveForm_Click" Content="Save"/>

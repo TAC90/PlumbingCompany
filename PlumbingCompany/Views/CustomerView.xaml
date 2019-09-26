@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="PlumbingCompany.Views.CustomerView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:PlumbingCompany.Views" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="600" d:DesignWidth="800" mc:Ignorable="d">
+    <Border Background="LightSkyBlue">
+        <Grid x:Name="CustomerViewer" Margin="10" DataContext="{Binding}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <DockPanel Grid.RowSpan="4" VerticalAlignment="Stretch">
+                <TextBox x:Name="TbCustomerListSearch" DockPanel.Dock="Top" Style="{StaticResource TbView}"/>
+                <ListBox x:Name="LbCustomerList" Grid.RowSpan="4" Width="250" MinWidth="200" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" SelectionChanged="LbCustomerList_SelectionChanged">
+                    <!--  List of Customers here  -->
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="40" Height="40" Source="{Binding CusImg}"/>
+                                <StackPanel>
+                                    <Label Content="{Binding CusFullName}" FontSize="16"/>
+                                    <Label Content="{Binding CusActiveJobs}" FontSize="10"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+            <StackPanel Grid.Column="1">
+                <Label Content="First Name" Style="{StaticResource LblView}"/>
+                <Label Content="Last Name" Style="{StaticResource LblView}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,10,0,0">
+                <Label Content="Address" Style="{StaticResource LblView}"/>
+                <Label Content="Zip Code" Style="{StaticResource LblView}"/>
+                <Label Content="City" Style="{StaticResource LblView}"/>
+                <Label Content="Country" Style="{StaticResource LblView}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,10,0,0">
+                <Label Content="E-Mail" Style="{StaticResource LblView}"/>
+                <Label Content="Phone Number" Style="{StaticResource LblView}"/>
+                <Label Content="Mobile Number" Style="{StaticResource LblView}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Grid.Column="1">
+                <Label Content="Jobs" Style="{StaticResource LblView}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+                <Label Content="Id: " Foreground="Gray" Style="{StaticResource LblView}"/>
+                <Label x:Name="LblCustomerId" Content="{Binding CustomerId}" Foreground="Gray" Style="{StaticResource LblView}"/>
+
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBox x:Name="TbCusFirstName" Style="{StaticResource TbView}" Text="{Binding FirstName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <TextBox x:Name="TbCusLastName" Style="{StaticResource TbView}" Text="{Binding LastName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,10,0,0">
+                <TextBox x:Name="TbCusAddress" Style="{StaticResource TbView}" Text="{Binding Address, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <TextBox x:Name="TbCusZipCode" Style="{StaticResource TbView}" Text="{Binding ZipCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <TextBox x:Name="TbCusCity" Style="{StaticResource TbView}" Text="{Binding City, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <TextBox x:Name="TbCusCountry" Style="{StaticResource TbView}" Text="{Binding Country, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,10,0,0">
+                <TextBox x:Name="TbCusMail" Style="{StaticResource TbView}" Text="{Binding Mail, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <TextBox x:Name="TbCusPhone" Style="{StaticResource TbView}" Text="{Binding PhoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <TextBox x:Name="TbCusMobile" Style="{StaticResource TbView}" Text="{Binding MobilePhone, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0"/>
+
+
+            <DataGrid x:Name="DgJobList" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding JobLocation}" Header="Location"/>
+                    <DataGridTextColumn Binding="{Binding JobWorkers}" Header="Worker"/>
+                    <DataGridTextColumn Binding="{Binding JobDateStart}" Header="Date Start"/>
+                    <DataGridTextColumn Width="*" Binding="{Binding JobDetails}" Header="Details"/>
+                </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate/>
+                </DataGrid.RowDetailsTemplate>
+            </DataGrid>
+
+            <Border Grid.RowSpan="2" Grid.Column="3" Width="150" Height="150" Margin="2" HorizontalAlignment="Right" VerticalAlignment="Top" Background="WhiteSmoke">
+                <Image Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding ProfilePicture}"/>
+            </Border>
+            <StackPanel Grid.Row="2" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
+                <Button x:Name="BtSaveForm" Width="75" Click="BtSaveForm_Click" Content="Save"/>
+                <Button x:Name="BtRemoveCustomer" Width="75" Click="BtRemoveCustomer_Click" Content="Delete"/>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</UserControl>

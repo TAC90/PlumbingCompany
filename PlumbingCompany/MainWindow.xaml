@@ -9,6 +9,9 @@
         <DataTemplate x:Name="jobViewTemplate" DataType="{x:Type viewmodels:JobViewModel}">
             <views:JobView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="customerViewTemplate" DataType="{x:Type viewmodels:CustomerViewModel}">
+            <views:CustomerView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -38,6 +41,7 @@
             <StackPanel>
                 <Button x:Name="btJobView" Width="48" Height="48" HorizontalAlignment="Left" Click="BtJobView_Click" Content="Jobs"/>
                 <Button x:Name="btEmployeeView" Width="48" Height="48" HorizontalAlignment="Left" Click="BtEmployeeView_Click" Content="Users"/>
+                <Button x:Name="btCustomerView" Width="48" Height="48" HorizontalAlignment="Left" Click="BtCustomerView_Click" Content="Customers"/>
                 <Button x:Name="btPartView" Width="48" Height="48" HorizontalAlignment="Left" Click="BtPartView_Click" Content="Parts"/>
             </StackPanel>
 

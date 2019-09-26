@@ -18,6 +18,7 @@ namespace PlumbingCompany
         //}
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Job> Jobs { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Part> Parts { get; set; }
 
     }

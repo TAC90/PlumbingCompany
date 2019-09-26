@@ -16,10 +16,14 @@ namespace PlumbingCompany.Models
         }
         [Key]
         public int JobId { get; set; }
+        public Customer Customer { get; set; }
         public int Status { get; set; }
         public string Details { get; set; }
-        public string Location { get; set; }
+        public string WorkDetails { get; set; }
+        public float HoursWorked { get; set; }
+        public float TotalPrice { get; set; }
         public System.DateTime? DateAdded { get; set; }
+        public System.DateTime? DateTarget { get; set; }
         public System.DateTime? DateClosed { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }

@@ -1,50 +1,70 @@
-﻿<UserControl x:Class="PlumbingCompany.Views.JobView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+﻿<UserControl x:Class="PlumbingCompany.Views.JobView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Models="clr-namespace:PlumbingCompany.Models" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded" mc:Ignorable="d">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="jobViewSource" d:DesignSource="{d:DesignInstance {x:Type Models:Job}, CreateList=True}"/>
+        <CollectionViewSource x:Key="jobEmployeesViewSource" Source="{Binding Employees, Source={StaticResource jobViewSource}}"/>
+        <CollectionViewSource x:Key="jobPartsViewSource" Source="{Binding Parts, Source={StaticResource jobViewSource}}"/>
+    </UserControl.Resources>
     <Border Background="LightSkyBlue">
-        <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+        <StackPanel Margin="10" Orientation="Horizontal">
             <DockPanel Grid.RowSpan="4" VerticalAlignment="Stretch">
                 <TextBox x:Name="TbJobListSearch" DockPanel.Dock="Top" Style="{StaticResource TbView}"/>
-                <ListBox x:Name="LbJobList" Grid.RowSpan="4" Width="250" MinWidth="200" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" SelectionChanged="LbJobList_SelectionChanged">
+                <ListBox x:Name="LbJobList" Grid.RowSpan="6" Width="250" MinWidth="200" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Stretch" SelectionChanged="LbJobList_SelectionChanged">
                     <!--  List of employees here  -->
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel>
-                                    <Label Content="{Binding JobLocation}" FontSize="16"/>
-                                    <Label Content="{Binding JobWorkers}" FontSize="10"/>
+                                    <Label Content="{Binding ClientFullName}" FontSize="16"/>
+                                    <Label Content="{Binding JobDateTarget}" FontSize="10"/>
+                                    <Label Content="{Binding JobEmployees}" FontSize="8"/>
                                 </StackPanel>
-                                <Image HorizontalAlignment="Right" Width="40" Height="40" Source="{Binding PartImg}"/>
+                                <Image Width="40" Height="40" HorizontalAlignment="Right" Source="{Binding PartImg}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </DockPanel>
-            <StackPanel Grid.Column="1">
-                <Label Style="{StaticResource LblView}">Lcoation</Label>
-                <Label Style="{StaticResource LblView}">Workers</Label>
-            </StackPanel>
-            <StackPanel Grid.Column="2">
-                <TextBox x:Name="TbJobLocation" Style="{StaticResource TbView}"/>
-                <TextBox x:Name="TbEmpLastName" Style="{StaticResource TbView}"/>
-            </StackPanel>
-            <StackPanel Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,10,0,0"/>
-
-        </Grid>
+            <Grid x:Name="JobViewer" Grid.Column="1" DataContext="{Binding}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <Label Content="Customer" Style="{StaticResource LblView}"/>
+                    <Label Content="Description" Style="{StaticResource LblView}"/>
+                    <Label Content="Target Date" Style="{StaticResource LblView}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2">
+                    <Label Content="Employees" Style="{StaticResource LblView}"/>
+                    <Label Content="Hours Worked" Style="{StaticResource LblView}"/>
+                    <Label Content="Parts Used" Style="{StaticResource LblView}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="4">
+                    <Label Content="Work Details" Style="{StaticResource LblView}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="2">
+                    <TextBox x:Name="ClientFullName" Style="{StaticResource TbView}" Text="{Binding Customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <TextBox x:Name="JobDetails" Style="{StaticResource TbView}" Text="{Binding HoursWorked, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <DatePicker x:Name="DateTarget" SelectedDate="{Binding DateTarget, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource DpView}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="2">
+                    <TextBox x:Name="EmpFullName" Style="{StaticResource TbView}" Text="{Binding FullName, Mode=TwoWay, NotifyOnValidationError=true, Source={StaticResource jobEmployeesViewSource}, ValidatesOnExceptions=true}"/>
+                    <TextBox x:Name="JobHoursWorked" Style="{StaticResource TbView}" Text="{Binding HoursWorked, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <ListBox x:Name="JobPartsUsed" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource jobPartsViewSource}}" SelectedValuePath="Name" Style="{StaticResource ListView}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="4" Grid.Column="2">
+                    <TextBox Width="Auto" MinHeight="80" Background="White" Text="{Binding WorkDetails}"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
     </Border>
 </UserControl>
