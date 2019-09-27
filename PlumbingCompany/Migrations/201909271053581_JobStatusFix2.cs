@@ -3,7 +3,7 @@ namespace PlumbingCompany.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class JobStatusFix2 : DbMigration
     {
         public override void Up()
         {
@@ -40,10 +40,13 @@ namespace PlumbingCompany.Migrations
                         DateTarget = c.DateTime(),
                         DateClosed = c.DateTime(),
                         Customer_CustomerId = c.Int(),
+                        JobStatus_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.JobId)
                 .ForeignKey("dbo.Customers", t => t.Customer_CustomerId)
-                .Index(t => t.Customer_CustomerId);
+                .ForeignKey("dbo.JobStatus", t => t.JobStatus_Id)
+                .Index(t => t.Customer_CustomerId)
+                .Index(t => t.JobStatus_Id);
             
             CreateTable(
                 "dbo.Employees",
@@ -67,6 +70,15 @@ namespace PlumbingCompany.Migrations
                         AddedOn = c.DateTime(),
                     })
                 .PrimaryKey(t => t.EmployeeId);
+            
+            CreateTable(
+                "dbo.JobStatus",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Parts",
@@ -110,6 +122,7 @@ namespace PlumbingCompany.Migrations
         {
             DropForeignKey("dbo.PartJobs", "Job_JobId", "dbo.Jobs");
             DropForeignKey("dbo.PartJobs", "Part_PartId", "dbo.Parts");
+            DropForeignKey("dbo.Jobs", "JobStatus_Id", "dbo.JobStatus");
             DropForeignKey("dbo.EmployeeJobs", "Job_JobId", "dbo.Jobs");
             DropForeignKey("dbo.EmployeeJobs", "Employee_EmployeeId", "dbo.Employees");
             DropForeignKey("dbo.Jobs", "Customer_CustomerId", "dbo.Customers");
@@ -117,10 +130,12 @@ namespace PlumbingCompany.Migrations
             DropIndex("dbo.PartJobs", new[] { "Part_PartId" });
             DropIndex("dbo.EmployeeJobs", new[] { "Job_JobId" });
             DropIndex("dbo.EmployeeJobs", new[] { "Employee_EmployeeId" });
+            DropIndex("dbo.Jobs", new[] { "JobStatus_Id" });
             DropIndex("dbo.Jobs", new[] { "Customer_CustomerId" });
             DropTable("dbo.PartJobs");
             DropTable("dbo.EmployeeJobs");
             DropTable("dbo.Parts");
+            DropTable("dbo.JobStatus");
             DropTable("dbo.Employees");
             DropTable("dbo.Jobs");
             DropTable("dbo.Customers");

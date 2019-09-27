@@ -7,13 +7,13 @@ namespace PlumbingCompany.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Initial : IMigrationMetadata
+    public sealed partial class JobStatusFix2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(JobStatusFix2));
         
         string IMigrationMetadata.Id
         {
-            get { return "201909261201096_Initial"; }
+            get { return "201909271053581_JobStatusFix2"; }
         }
         
         string IMigrationMetadata.Source

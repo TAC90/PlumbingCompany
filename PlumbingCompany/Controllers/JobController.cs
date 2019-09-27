@@ -1,12 +1,13 @@
 ﻿using PlumbingCompany.Models;
 using PlumbingCompany.Viewmodels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace PlumbingCompany.Controllers
 {
-    class JobController
+    public class JobController
     {
         public List<JobViewModel> FillJobList()
         {
@@ -44,10 +45,6 @@ namespace PlumbingCompany.Controllers
 
         public class JobViewModel
         {
-            public JobViewModel()
-            {
-
-            }
             public JobViewModel(int id, Customer customer, DateTime? dateTarget, ICollection<Employee> employees, string details)
             {
                 JobId = id;
@@ -75,14 +72,10 @@ namespace PlumbingCompany.Controllers
 
         public class JobShortViewModel
         {
-            public JobShortViewModel()
-            {
-
-            }
             public JobShortViewModel(int id, Customer customer, DateTime? dateAdded, DateTime? dateTarget, ICollection<Employee> employees, string details)
             {
                 this.JobId = id;
-                this.ClientFullName = $"{customer.FirstName} {customer.LastName}"; //Create Name, leave out empty strings
+                this.ClientFullName = $"{customer.FirstName} {customer.LastName}";
                 this.JobDateAdded = dateAdded;
                 this.JobDateTarget = dateTarget;
 

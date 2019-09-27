@@ -61,7 +61,7 @@
             </StackPanel>
             <StackPanel Grid.Column="2">
 
-                <ComboBox x:Name="CbEmpPrefix" ItemsSource="{Binding}" SelectedItem="{Binding Prefix, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource CbView}">
+                <ComboBox x:Name="CbEmpPrefix" ItemsSource="{Binding}" SelectedItem="{Binding Prefix, Mode=TwoWay}" Style="{StaticResource CbView}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <ComboBoxItem Content="{Binding}" Style="{StaticResource CbiView}"/>

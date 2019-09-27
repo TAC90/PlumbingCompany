@@ -39,6 +39,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel>
+                    <Label Content="Status" Style="{StaticResource LblView}"/>
                     <Label Content="Customer" Style="{StaticResource LblView}"/>
                     <Label Content="Description" Style="{StaticResource LblView}"/>
                     <Label Content="Target Date" Style="{StaticResource LblView}"/>
@@ -52,14 +53,15 @@
                     <Label Content="Work Details" Style="{StaticResource LblView}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="0" Grid.Column="2">
-                    <TextBox x:Name="ClientFullName" Style="{StaticResource TbView}" Text="{Binding Customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                    <TextBox x:Name="JobDetails" Style="{StaticResource TbView}" Text="{Binding HoursWorked, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                    <DatePicker x:Name="DateTarget" SelectedDate="{Binding DateTarget, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource DpView}"/>
+                    <ComboBox x:Name="CbJobStatus" Width="160" DisplayMemberPath="Name" ItemsSource="{Binding}" SelectedValue="{Binding Path=JobStatus}" Style="{StaticResource CbView}"/>
+                    <TextBox Style="{StaticResource TbView}" Text="{Binding Customer, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <TextBox Style="{StaticResource TbView}" Text="{Binding Details, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <DatePicker SelectedDate="{Binding DateTarget, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Style="{StaticResource DpView}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="2">
-                    <TextBox x:Name="EmpFullName" Style="{StaticResource TbView}" Text="{Binding FullName, Mode=TwoWay, NotifyOnValidationError=true, Source={StaticResource jobEmployeesViewSource}, ValidatesOnExceptions=true}"/>
-                    <TextBox x:Name="JobHoursWorked" Style="{StaticResource TbView}" Text="{Binding HoursWorked, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                    <ListBox x:Name="JobPartsUsed" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource jobPartsViewSource}}" SelectedValuePath="Name" Style="{StaticResource ListView}"/>
+                    <TextBox Style="{StaticResource TbView}" Text="{Binding FullName, Mode=TwoWay, NotifyOnValidationError=true, Source={StaticResource jobEmployeesViewSource}, ValidatesOnExceptions=true}"/>
+                    <TextBox Style="{StaticResource TbView}" Text="{Binding HoursWorked, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                    <ListBox x:Name="LbJobPartsUsed" DisplayMemberPath="Name" ItemsSource="{Binding Source={StaticResource jobPartsViewSource}}" SelectedValuePath="Name" Style="{StaticResource ListView}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="4" Grid.Column="2">
                     <TextBox Width="Auto" MinHeight="80" Background="White" Text="{Binding WorkDetails}"/>

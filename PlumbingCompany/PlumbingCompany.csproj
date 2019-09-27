@@ -83,14 +83,15 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
-    <Compile Include="Migrations\201909261201096_Initial.cs" />
-    <Compile Include="Migrations\201909261201096_Initial.Designer.cs">
-      <DependentUpon>201909261201096_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201909271053581_JobStatusFix2.cs" />
+    <Compile Include="Migrations\201909271053581_JobStatusFix2.Designer.cs">
+      <DependentUpon>201909271053581_JobStatusFix2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Job.cs" />
+    <Compile Include="Models\JobStatus.cs" />
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\CompanyContext.cs" />
     <Compile Include="Viewmodels\CustomerViewModel.cs" />
@@ -152,8 +153,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201909261201096_Initial.resx">
-      <DependentUpon>201909261201096_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201909271053581_JobStatusFix2.resx">
+      <DependentUpon>201909271053581_JobStatusFix2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

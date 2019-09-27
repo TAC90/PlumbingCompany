@@ -29,6 +29,7 @@ namespace PlumbingCompany.Views
             InitializeComponent();
 
             LbJobList.ItemsSource = jobControl.FillJobList();
+            CbJobStatus.ItemsSource = context.JobStatuses.ToList();
         }
 
         private void LbJobList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -40,6 +41,7 @@ namespace PlumbingCompany.Views
                 JobViewer.DataContext = context.Jobs.Find(id); //Fill binding data with Job data found by this ID
             }
         }
+        
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
