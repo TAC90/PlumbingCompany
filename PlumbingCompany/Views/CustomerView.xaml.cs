@@ -39,7 +39,7 @@ namespace PlumbingCompany.Views
             {
                 JobController jobControl = new JobController();
 
-                int id = (LbCustomerList.SelectedItem as CustomerController.CustomerViewModel).CusID; //Get Customer ID
+                int id = (LbCustomerList.SelectedItem as Viewmodels.CustomerViewModel).CusID; //Get Customer ID
 
                 CustomerViewer.DataContext = context.Customers.Find(id); //Fill binding data with Customer data found by this ID
                 DgJobList.ItemsSource = jobControl.FillJobShortList(id); // Fill job list of cliloyee with this ID
@@ -80,10 +80,10 @@ namespace PlumbingCompany.Views
 
         private void BtRemoveCustomer_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult confirmDelete = MessageBox.Show("Are you sure you want to remove " + (LbCustomerList.SelectedItem as CustomerController.CustomerViewModel).CusFullName + "?", "Delete Confirmation", MessageBoxButton.YesNo);
+            MessageBoxResult confirmDelete = MessageBox.Show("Are you sure you want to remove " + (LbCustomerList.SelectedItem as Viewmodels.CustomerViewModel).CusFullName + "?", "Delete Confirmation", MessageBoxButton.YesNo);
             if (confirmDelete == MessageBoxResult.Yes)
             {
-                Console.WriteLine("Removed {0}", (LbCustomerList.SelectedItem as CustomerController.CustomerViewModel).CusFullName);
+                Console.WriteLine("Removed {0}", (LbCustomerList.SelectedItem as Viewmodels.CustomerViewModel).CusFullName);
                 LbCustomerList.ItemsSource = cusControl.FillCustomerList();
             }
         }

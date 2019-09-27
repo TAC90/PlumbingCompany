@@ -42,7 +42,7 @@ namespace PlumbingCompany.Views
             {
                 JobController jobControl = new JobController();
 
-                int id = (LbEmployeeList.SelectedItem as EmployeeController.EmployeeViewModel).EmpID; //Get Employee ID
+                int id = (LbEmployeeList.SelectedItem as Viewmodels.EmployeeViewModel).EmpID; //Get Employee ID
 
                 EmpViewer.DataContext = context.Employees.Find(id); //Fill binding data with Employee data found by this ID
                 DgJobList.ItemsSource = jobControl.FillJobShortList(id); // Fill job list of employee with this ID
@@ -100,10 +100,10 @@ namespace PlumbingCompany.Views
 
         private void BtRemoveEmployee_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult confirmDelete = MessageBox.Show("Are you sure you want to remove " + (LbEmployeeList.SelectedItem as EmployeeController.EmployeeViewModel).EmpFullName + "?", "Delete Confirmation", MessageBoxButton.YesNo);
+            MessageBoxResult confirmDelete = MessageBox.Show("Are you sure you want to remove " + (LbEmployeeList.SelectedItem as Viewmodels.EmployeeViewModel).EmpFullName + "?", "Delete Confirmation", MessageBoxButton.YesNo);
             if(confirmDelete == MessageBoxResult.Yes)
             {
-                Console.WriteLine("Removed {0}",  (LbEmployeeList.SelectedItem as EmployeeController.EmployeeViewModel).EmpFullName);
+                Console.WriteLine("Removed {0}",  (LbEmployeeList.SelectedItem as Viewmodels.EmployeeViewModel).EmpFullName);
                 LbEmployeeList.ItemsSource = empControl.FillEmployeeList();
             }
         }

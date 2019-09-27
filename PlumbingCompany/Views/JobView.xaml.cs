@@ -30,13 +30,14 @@ namespace PlumbingCompany.Views
 
             LbJobList.ItemsSource = jobControl.FillJobList();
             CbJobStatus.ItemsSource = context.JobStatuses.ToList();
+            CbJobClient.ItemsSource = context.Customers.ToList();
         }
 
         private void LbJobList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (LbJobList.SelectedItem != null)
             {
-                int id = (LbJobList.SelectedItem as JobController.JobViewModel).JobId; //Get Job ID
+                int id = (LbJobList.SelectedItem as Viewmodels.JobViewModel).JobId; //Get Job ID
 
                 JobViewer.DataContext = context.Jobs.Find(id); //Fill binding data with Job data found by this ID
             }
@@ -53,6 +54,31 @@ namespace PlumbingCompany.Views
             // 	System.Windows.Data.CollectionViewSource myCollectionViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["Resource Key for CollectionViewSource"];
             // 	myCollectionViewSource.Source = your data
             // }
+        }
+
+        private void BtSaveForm_Click(object sender, RoutedEventArgs e)
+        {
+            if (LblJobId.Content == null) 
+            {
+                if (MessageBox.Show($"Create new task {CbJobClient.SelectedItem.ToString()}?", "Create New Task?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    jobControl.AddNewJob(this);
+                    LbJobList.ItemsSource = jobControl.FillJobList(); //Rebuild list
+                }
+            }
+            else
+            {
+                if (MessageBox.Show($"Update Employee {CbJobClient.SelectedItem.ToString()}?", "Update Employee", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    jobControl.UpdateEmployee(this); 
+                    LbJobList.ItemsSource = jobControl.FillJobList(); //Rebuild list
+                }
+            }
+        }
+
+        private void BtRemoveJob_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

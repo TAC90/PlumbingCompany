@@ -96,6 +96,7 @@
     <Compile Include="Models\CompanyContext.cs" />
     <Compile Include="Viewmodels\CustomerViewModel.cs" />
     <Compile Include="Viewmodels\EmployeeViewModel.cs" />
+    <Compile Include="Viewmodels\JobShortViewModel.cs" />
     <Compile Include="Viewmodels\JobViewModel.cs" />
     <Compile Include="Viewmodels\PartViewModel.cs" />
     <Compile Include="Views\CustomerView.xaml.cs">

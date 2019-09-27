@@ -1,7 +1,7 @@
 ﻿using PlumbingCompany.Models;
 using PlumbingCompany.Viewmodels;
+using PlumbingCompany.Views;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -43,61 +43,37 @@ namespace PlumbingCompany.Controllers
             return jobList;
         }
 
-        public class JobViewModel
+        internal void AddNewJob(JobView job)
         {
-            public JobViewModel(int id, Customer customer, DateTime? dateTarget, ICollection<Employee> employees, string details)
+            using (var context = new CompanyContext())
             {
-                JobId = id;
-                ClientFullName = customer.FullName;
-                JobDateTarget = dateTarget;
-                List<string> tempEmp = new List<string>();
-                foreach (Employee employee in employees)
+                Job tempJob = new Job
                 {
-                    tempEmp.Add(employee.FullName);
-                }
-                JobEmployees = string.Join(", ", tempEmp);
-
-                if (details.Length > 50)
-                {
-                    details = details.Substring(0, 47) + "...";
-                }
-                this.JobDetails = details;
+                    JobStatus = job.CbJobStatus.SelectedItem as JobStatus,
+                    Customer = job.CbJobClient.SelectedItem as Customer,
+                    Details = job.TbJobDetails.Text,
+                    HoursWorked = Convert.ToInt32( job.TbJobHours.Text),
+                    WorkDetails = job.TbJobWorkDetails.Text
+                    //HiredOn = customer.TbCusHiredOn.SelectedDate,
+                };
+                Console.WriteLine($"Adding: {job.CbJobClient.SelectedValue} task as new Job"); //Log change
+                context.Jobs.Add(tempJob);
+                context.SaveChanges();
             }
-            public int JobId { get; set; }
-            public string ClientFullName { get; set; }
-            public DateTime? JobDateTarget { get; set; }
-            public string JobEmployees { get; set; }
-            public string JobDetails { get; set; }
         }
 
-        public class JobShortViewModel
+
+        internal void UpdateEmployee(JobView jobView)
         {
-            public JobShortViewModel(int id, Customer customer, DateTime? dateAdded, DateTime? dateTarget, ICollection<Employee> employees, string details)
+            using (var context = new CompanyContext())
             {
-                this.JobId = id;
-                this.ClientFullName = $"{customer.FirstName} {customer.LastName}";
-                this.JobDateAdded = dateAdded;
-                this.JobDateTarget = dateTarget;
 
-                List<string> tempEmp = new List<string>();
-                foreach (Employee employee in employees)
-                {
-                    tempEmp.Add(employee.FullName);
-                }
-                this.JobEmployees = string.Join(", ", employees);
 
-                if (details.Length > 50)
-                {
-                    details = details.Substring(0, 47) + "...";
-                }
-                this.JobDetails = details;
+#if DEBUG
+                Console.WriteLine($"Updating record"); //Log change
+#endif
+                context.SaveChanges();
             }
-            public int JobId { get; set; }
-            public string ClientFullName { get; set; }
-            public DateTime? JobDateAdded { get; set; }
-            public DateTime? JobDateTarget { get; set; }
-            public string JobEmployees { get; set; }
-            public string JobDetails { get; set; }
         }
     }
 }
